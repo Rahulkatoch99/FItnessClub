@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  fitness-club-ui:
+    container_name: fitness-club-ui
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fitness-club-ui:dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+    restart: unless-stopped
