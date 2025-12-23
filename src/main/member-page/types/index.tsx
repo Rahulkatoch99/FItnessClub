@@ -1,6 +1,7 @@
 export interface Member {
   id: number;
   name: string;
+  username: string;
   phone: string;
   plan: string;
   joinDate: string;

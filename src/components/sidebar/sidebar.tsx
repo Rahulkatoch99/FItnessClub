@@ -18,6 +18,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { PERMISSION_KEYS, type PermissionKey } from "../../main/types/permissions";
@@ -30,6 +33,9 @@ type SidebarItem = {
 
 const items: SidebarItem[] = [
   { title: "Dashboard", icon: <DashboardIcon />, permission: PERMISSION_KEYS.DASHBOARD_VIEW },
+  { title: "Profile", icon: <AccountCircleIcon />, permission: PERMISSION_KEYS.PROFILE_VIEW },
+  { title: "Exercise Log", icon: <FitnessCenterIcon />, permission: PERMISSION_KEYS.EXERCISE_LOG_VIEW },
+  { title: "Workout Plan", icon: <PlaylistAddCheckIcon />, permission: PERMISSION_KEYS.WORKOUT_PLAN_VIEW },
   { title: "Staff Member", icon: <SupportAgentIcon />, permission: PERMISSION_KEYS.STAFF_MANAGE },
   { title: "Membership Type", icon: <BadgeIcon />, permission: PERMISSION_KEYS.MEMBERSHIP_TYPE_VIEW },
   { title: "Member", icon: <PersonIcon />, permission: PERMISSION_KEYS.MEMBER_VIEW },

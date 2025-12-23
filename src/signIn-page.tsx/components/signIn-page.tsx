@@ -3,6 +3,10 @@ import { Container, Card, Form, Button } from "react-bootstrap";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { useNavigate } from "react-router-dom";
 import { ALL_PERMISSIONS, PERMISSION_KEYS } from "../../main/types/permissions";
+import { data as members } from "../../main/member-page/data";
+import { Member } from "../../main/member-page/types";
+
+type AuthMember = Member & { username?: string; password?: string };
 
 // Minimal JWT builder using Web Crypto (HS256). For dev/demo only.
 const base64UrlEncode = (data: Uint8Array) =>
@@ -38,8 +42,12 @@ export const SignInPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const issueToken = async (permissions: string[], role: string) => {
-    const token = await signJwt({ permissions, role }, "dev-secret");
+  const issueToken = async (
+    permissions: string[],
+    role: string,
+    user?: Partial<Member>
+  ) => {
+    const token = await signJwt({ permissions, role, user }, "dev-secret");
     return token;
   };
 
@@ -47,22 +55,43 @@ export const SignInPage: React.FC = () => {
     e.preventDefault();
     if (email === "123@gmail.com" && password === "123") {
       // Admin: full access
-      const token = await issueToken(ALL_PERMISSIONS, "admin");
+      const adminPerms = ALL_PERMISSIONS.filter(
+        (p) => p !== PERMISSION_KEYS.EXERCISE_LOG_VIEW && p !== PERMISSION_KEYS.WORKOUT_PLAN_VIEW
+      );
+      const token = await issueToken(adminPerms, "admin");
       localStorage.setItem("auth_token", token);
       console.log("Signed in as admin with full permissions");
       navigate("/main-page", { replace: true });
       return;
     }
 
-    if (email === "user@gmail.com" && password === "123") {
-      // Standard user: limited access
+    const memberList = members as AuthMember[];
+    const matchedMember = memberList.find(
+      (m) =>
+        (m.username === email || m.phone === email || m.email === email) &&
+        m.password === password
+    );
+
+    if (matchedMember) {
+      // Members get only member-facing features
       const userPerms = [
-        PERMISSION_KEYS.MEMBERSHIP_TYPE_VIEW ,
-        PERMISSION_KEYS.ATTENDANCE_VIEW,
+        PERMISSION_KEYS.PROFILE_VIEW,
+        PERMISSION_KEYS.EXERCISE_LOG_VIEW,
+        PERMISSION_KEYS.WORKOUT_PLAN_VIEW,
       ];
-      const token = await issueToken(userPerms, "member");
+      const token = await issueToken(userPerms, "member", {
+        id: matchedMember.id,
+        name: matchedMember.name,
+        plan: matchedMember.plan,
+        phone: matchedMember.phone,
+        username: matchedMember.username,
+        address: matchedMember.address,
+        avatar: matchedMember.avatar,
+        dueDate: matchedMember.dueDate,
+      });
       localStorage.setItem("auth_token", token);
-      console.log("Signed in as user with limited permissions");
+      localStorage.setItem("current_user", JSON.stringify(matchedMember));
+      console.log("Signed in as member", matchedMember.username);
       navigate("/main-page", { replace: true });
       return;
     }
@@ -98,18 +127,24 @@ export const SignInPage: React.FC = () => {
               className="d-flex align-items-center gap-2 justify-content-center mb-4"
               style={{ color: "#fff", fontSize: "1.5rem", fontWeight: 700 }}
             >
-              <FitnessCenterIcon style={{ color: accentColor, fontSize: "1.8rem" }} />
+              <FitnessCenterIcon
+                style={{ color: accentColor, fontSize: "1.8rem" }}
+              />
               FITNESS CLUB
             </div>
 
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
-                <Form.Label style={{ color: "#fff", fontSize: "0.9rem" }}>Email ID</Form.Label>
+                <Form.Label style={{ color: "#fff", fontSize: "0.9rem" }}>
+                  Email ID
+                </Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Enter your email"
                   value={email}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setEmail(e.target.value)
+                  }
                   style={{
                     backgroundColor: "#2a2a33",
                     color: "#fff",
@@ -120,12 +155,16 @@ export const SignInPage: React.FC = () => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label style={{ color: "#fff", fontSize: "0.9rem" }}>Password</Form.Label>
+                <Form.Label style={{ color: "#fff", fontSize: "0.9rem" }}>
+                  Password
+                </Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPassword(e.target.value)
+                  }
                   style={{
                     backgroundColor: "#2a2a33",
                     color: "#fff",

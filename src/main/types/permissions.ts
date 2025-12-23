@@ -8,6 +8,9 @@ export const PERMISSION_KEYS = {
   CLASS_SCHEDULE_VIEW: "class-schedule:view",
   ATTENDANCE_VIEW: "attendance:view",
   ACCOUNTANT_VIEW: "accountant:view",
+  PROFILE_VIEW: "profile:view",
+  EXERCISE_LOG_VIEW: "exercise-log:view",
+  WORKOUT_PLAN_VIEW: "workout-plan:view",
 } as const;
 
 export type PermissionKey = (typeof PERMISSION_KEYS)[keyof typeof PERMISSION_KEYS];

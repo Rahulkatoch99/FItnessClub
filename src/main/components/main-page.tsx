@@ -7,6 +7,9 @@ import { StaffPage } from "../staff-member/staff-member-page";
 import { MembershipTypePage } from "../membership-type/membership-type";
 import AccountantPage from "../accountant/accountant-page";
 import AttendancePage from "../attendance/attendance";
+import ProfilePage from "../profile/profile";
+import ExerciseLogPage from "../exercise-log/exercise-log";
+import WorkoutPlanPage from "../workout-plan/workout-plan";
 import {
   ALL_PERMISSIONS,
   PERMISSION_KEYS,
@@ -22,6 +25,9 @@ const pagePermissionMap: Record<string, PermissionKey> = {
   Member: PERMISSION_KEYS.MEMBER_VIEW,
   Attendance: PERMISSION_KEYS.ATTENDANCE_VIEW,
   Accountant: PERMISSION_KEYS.ACCOUNTANT_VIEW,
+  Profile: PERMISSION_KEYS.PROFILE_VIEW,
+  "Exercise Log": PERMISSION_KEYS.EXERCISE_LOG_VIEW,
+  "Workout Plan": PERMISSION_KEYS.WORKOUT_PLAN_VIEW,
 };
 
 export const LayoutMainPageLayout = () => {
@@ -58,6 +64,12 @@ export const LayoutMainPageLayout = () => {
         return <AccountantPage />;
       case "Attendance":
         return <AttendancePage />;
+      case "Profile":
+        return <ProfilePage />;
+      case "Exercise Log":
+        return <ExerciseLogPage />;
+      case "Workout Plan":
+        return <WorkoutPlanPage />;
 
       // add more sidebar items here
       default:

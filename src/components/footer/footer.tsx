@@ -65,7 +65,7 @@ export const Footer: React.FC<FooterProps> = () => {
           <Col xs={12} md={4} lg={3}>
             <h5 style={{ color: linkColor, fontWeight: 'bold', marginBottom: '20px' }}>Get In Touch</h5>
             <p style={{ fontSize: '0.9rem', marginBottom: '5px' }}>📍 New Delhi, India</p>
-            <p style={{ fontSize: '0.9rem', marginBottom: '5px' }}>📞 +91 98765 12345</p>
+            <p style={{ fontSize: '0.9rem', marginBottom: '5px' }}>📞 +91 9910935066</p>
             <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>✉️ info@fitnessClub.com</p>
 
             {/* Social Icons */}
@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = () => {
         <Row className="text-center" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
           <Col>
             <p style={{ fontSize: '0.8rem', color: '#777', margin: 0 }}>
-              &copy; {new Date().getFullYear()} FITNESS CLUB. All Rights Reserved.
+              &copy; {new Date().getFullYear()} FITNESS CLUB - Rahul Katoch. All Rights Reserved.
             </p>
           </Col>
         </Row>

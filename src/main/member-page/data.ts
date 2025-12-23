@@ -7,6 +7,8 @@ export const data: Member[] = [
   {
     id: 1,
     name: "Rahul Sharma",
+    username: "user@gmail.com",
+    password: "123",
     phone: "9876543210",
     plan: "Gold",
     fees: "2500",
@@ -19,6 +21,8 @@ export const data: Member[] = [
   {
     id: 2,
     name: "Karan Singh",
+    username: "9087654321",
+    password: "123",
     phone: "9087654321",
     plan: "Silver",
     fees: "3600",
@@ -31,6 +35,8 @@ export const data: Member[] = [
   {
     id: 3,
     name: "Aman Verma",
+    username: "9001234567",
+    password: "123",
     phone: "9001234567",
     plan: "Platinum",
     fees: "4500",
@@ -43,6 +49,8 @@ export const data: Member[] = [
   {
     id: 4,
     name: "Vikram Patel",
+    username: "9990123456",
+    password: "123",
     phone: "9990123456",
     plan: "Bronze",
     fees: "1800",
@@ -55,6 +63,8 @@ export const data: Member[] = [
   {
     id: 5,
     name: "Rajesh Kumar",
+    username: "8700123498",
+    password: "123",
     phone: "8700123498",
     plan: "Gold",
     fees: "2500",
@@ -67,6 +77,8 @@ export const data: Member[] = [
   {
     id: 6,
     name: "Sanjay Gupta",
+    username: "9102345678",
+    password: "123",
     phone: "9102345678",
     plan: "Silver",
     fees: "3600",
@@ -79,6 +91,8 @@ export const data: Member[] = [
   {
     id: 7,
     name: "Anjali Sharma",
+    username: "9801237654",
+    password: "123",
     phone: "9801237654",
     plan: "Platinum",
     fees: "4500",
@@ -91,6 +105,8 @@ export const data: Member[] = [
   {
     id: 8,
     name: "Pooja Mehta",
+    username: "9854653212",
+    password: "123",
     phone: "9854653212",
     plan: "Gold",
     fees: "2500",
@@ -103,6 +119,8 @@ export const data: Member[] = [
   {
     id: 9,
     name: "Harsh Yadav",
+    username: "9988776655",
+    password: "123",
     phone: "9988776655",
     plan: "Bronze",
     fees: "1800",
@@ -115,6 +133,8 @@ export const data: Member[] = [
   {
     id: 10,
     name: "Rohit Verma",
+    username: "9090909090",
+    password: "123",
     phone: "9090909090",
     plan: "Silver",
     fees: "3600",
@@ -130,6 +150,8 @@ export const data: Member[] = [
   {
     id: 40,
     name: "Rajat Kapoor",
+    username: "9223344556",
+    password: "123",
     phone: "9223344556",
     plan: "Platinum",
     fees: "4500",
@@ -139,7 +161,8 @@ export const data: Member[] = [
     address: "Karol Bagh, New Delhi",
     avatar: "https://i.pravatar.cc/150?img=40",
   },
-].map((member) => {
+]
+.map((member) => {
   const due = new Date(member.dueDate);
 
   const diffTime = due.getTime() - today.getTime();
