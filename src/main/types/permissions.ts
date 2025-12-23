@@ -17,16 +17,19 @@ export type PermissionKey = (typeof PERMISSION_KEYS)[keyof typeof PERMISSION_KEY
 
 export const ALL_PERMISSIONS: PermissionKey[] = Object.values(PERMISSION_KEYS);
 
+const base64UrlToBase64 = (input: string) =>
+  input.replace(/-/g, "+").replace(/_/g, "/") + "=".repeat((4 - (input.length % 4)) % 4);
+
 // Extract permissions from a JWT-ish token (payload.permissions: string[]).
-// Falls back to ALL_PERMISSIONS so the UI still renders in dev if no token exists.
+// Fails closed ([]) when the token is missing/invalid to avoid exposing admin menus.
 export function decodePermissionsFromToken(token: string | null): PermissionKey[] {
-  if (!token) return ALL_PERMISSIONS;
+  if (!token) return [];
 
   const parts = token.split(".");
-  if (parts.length < 2) return ALL_PERMISSIONS;
+  if (parts.length < 2) return [];
 
   try {
-    const payload = JSON.parse(atob(parts[1]));
+    const payload = JSON.parse(atob(base64UrlToBase64(parts[1])));
     const perms = payload?.permissions;
     if (Array.isArray(perms)) {
       return perms.filter((p): p is PermissionKey => typeof p === "string");
@@ -35,6 +38,6 @@ export function decodePermissionsFromToken(token: string | null): PermissionKey[
     console.warn("Failed to decode permissions from token", error);
   }
 
-  return ALL_PERMISSIONS;
+  return [];
 }
 

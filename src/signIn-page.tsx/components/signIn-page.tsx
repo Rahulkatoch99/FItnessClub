@@ -78,6 +78,7 @@ export const SignInPage: React.FC = () => {
         PERMISSION_KEYS.PROFILE_VIEW,
         PERMISSION_KEYS.EXERCISE_LOG_VIEW,
         PERMISSION_KEYS.WORKOUT_PLAN_VIEW,
+        PERMISSION_KEYS.MEMBERSHIP_TYPE_VIEW,
       ];
       const token = await issueToken(userPerms, "member", {
         id: matchedMember.id,

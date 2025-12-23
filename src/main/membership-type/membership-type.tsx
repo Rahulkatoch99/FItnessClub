@@ -15,12 +15,15 @@ import EditIcon from "@mui/icons-material/Edit";
 import PaymentIcon from "@mui/icons-material/Payment";
 import { membershipTypeData } from "./types";
 
+const base64UrlToBase64 = (input: string) =>
+  input.replace(/-/g, "+").replace(/_/g, "/") + "=".repeat((4 - (input.length % 4)) % 4);
+
 const decodeRoleFromToken = (token: string | null) => {
   if (!token) return null;
   const parts = token.split(".");
   if (parts.length < 2) return null;
   try {
-    const payload = JSON.parse(atob(parts[1]));
+    const payload = JSON.parse(atob(base64UrlToBase64(parts[1])));
     return payload?.role ?? null;
   } catch (error) {
     console.warn("Failed to decode role from token", error);
